@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Register</class>
+ <widget class="QWidget" name="Register">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>840</width>
+    <height>719</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>配准工具</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_2">
+   <item row="0" column="7">
+    <widget class="QPushButton" name="pushButton_Ok">
+     <property name="minimumSize">
+      <size>
+       <width>100</width>
+       <height>25</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>100</width>
+       <height>25</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>开始计算</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="5">
+    <widget class="QRadioButton" name="radioButton_Multi">
+     <property name="text">
+      <string>魔法变换</string>
+     </property>
+     <property name="checked">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="3">
+    <widget class="QRadioButton" name="radioButton_CenteredSimilarity">
+     <property name="text">
+      <string>中心相似二维变换</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QPushButton" name="pushButton_SelectImageFix">
+     <property name="minimumSize">
+      <size>
+       <width>100</width>
+       <height>25</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>100</width>
+       <height>25</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>基准图像</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1" colspan="6">
+    <widget class="QLineEdit" name="lineEdit_ImageFix">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>25</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>25</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="2">
+    <widget class="QRadioButton" name="radioButton_Translation">
+     <property name="text">
+      <string>平移变换</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>115</width>
+       <height>17</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="2" column="6">
+    <spacer name="horizontalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>115</width>
+       <height>17</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="0">
+    <widget class="QPushButton" name="pushButton_SelectImageMove">
+     <property name="minimumSize">
+      <size>
+       <width>100</width>
+       <height>25</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>100</width>
+       <height>25</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>待配准图像</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="4">
+    <widget class="QRadioButton" name="radioButton_Affine">
+     <property name="text">
+      <string>仿射变换</string>
+     </property>
+     <property name="checked">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1" colspan="6">
+    <widget class="QLineEdit" name="lineEdit_ImageMove">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>25</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>25</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="7">
+    <widget class="QPushButton" name="pushButton_Cancel">
+     <property name="minimumSize">
+      <size>
+       <width>100</width>
+       <height>25</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>100</width>
+       <height>25</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>退出</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="8">
+    <widget class="QWidget" name="widget" native="true">
+     <layout class="QGridLayout" name="gridLayout_5">
+      <item row="0" column="0">
+       <widget class="QSplitter" name="splitter_3">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <widget class="QSplitter" name="splitter">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <widget class="QWidget" name="widget_2" native="true">
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QLabel" name="label_2">
+             <property name="minimumSize">
+              <size>
+               <width>60</width>
+               <height>16</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>60</width>
+               <height>16</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>基准图像</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QVTKWidget" name="qvtkWidget_Registration_UL" native="true">
+             <property name="minimumSize">
+              <size>
+               <width>340</width>
+               <height>255</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="widget_3" native="true">
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <item>
+            <widget class="QVTKWidget" name="qvtkWidget_Registration_DL" native="true">
+             <property name="minimumSize">
+              <size>
+               <width>340</width>
+               <height>255</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label">
+             <property name="minimumSize">
+              <size>
+               <width>60</width>
+               <height>16</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>60</width>
+               <height>16</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>中间结果</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+        <widget class="QSplitter" name="splitter_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <widget class="QWidget" name="widget_4" native="true">
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <widget class="QLabel" name="label_3">
+             <property name="minimumSize">
+              <size>
+               <width>60</width>
+               <height>16</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>60</width>
+               <height>16</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>待配准图像</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QVTKWidget" name="qvtkWidget_Registration_UR" native="true">
+             <property name="minimumSize">
+              <size>
+               <width>340</width>
+               <height>255</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="widget_5" native="true">
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <item>
+            <widget class="QVTKWidget" name="qvtkWidget_Registration_DR" native="true">
+             <property name="minimumSize">
+              <size>
+               <width>340</width>
+               <height>255</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_4">
+             <property name="minimumSize">
+              <size>
+               <width>60</width>
+               <height>16</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>60</width>
+               <height>16</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>最终结果</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>QVTKWidget</class>
+   <extends>QWidget</extends>
+   <header>QVTKWidget.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="QvtkDicomViewer.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>pushButton_SelectImageFix</sender>
+   <signal>clicked()</signal>
+   <receiver>Register</receiver>
+   <slot>OnSelectImageFix()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>82</x>
+     <y>27</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>160</x>
+     <y>4</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_SelectImageMove</sender>
+   <signal>clicked()</signal>
+   <receiver>Register</receiver>
+   <slot>OnSelectImageMove()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>32</x>
+     <y>55</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>43</x>
+     <y>82</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_Ok</sender>
+   <signal>clicked()</signal>
+   <receiver>Register</receiver>
+   <slot>OnButtonOk()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>830</x>
+     <y>28</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>541</x>
+     <y>5</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_Cancel</sender>
+   <signal>clicked()</signal>
+   <receiver>Register</receiver>
+   <slot>OnButtonCancel()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>830</x>
+     <y>64</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>675</x>
+     <y>83</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_Translation</sender>
+   <signal>clicked()</signal>
+   <receiver>Register</receiver>
+   <slot>OnSelectTranslation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>276</x>
+     <y>80</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>221</x>
+     <y>35</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_CenteredSimilarity</sender>
+   <signal>clicked()</signal>
+   <receiver>Register</receiver>
+   <slot>OnSelectCenteredSimilarity()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>374</x>
+     <y>73</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>337</x>
+     <y>37</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_Affine</sender>
+   <signal>clicked()</signal>
+   <receiver>Register</receiver>
+   <slot>OnSelectAffine()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>485</x>
+     <y>81</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>462</x>
+     <y>37</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_Multi</sender>
+   <signal>clicked()</signal>
+   <receiver>Register</receiver>
+   <slot>OnSelectMulit()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>547</x>
+     <y>77</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>533</x>
+     <y>37</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>OnSelectImageFix()</slot>
+  <slot>OnSelectImageMove()</slot>
+  <slot>OnButtonOk()</slot>
+  <slot>OnButtonCancel()</slot>
+  <slot>OnSelectTranslation()</slot>
+  <slot>OnSelectCenteredSimilarity()</slot>
+  <slot>OnSelectAffine()</slot>
+  <slot>OnSelectMulit()</slot>
+ </slots>
+</ui>

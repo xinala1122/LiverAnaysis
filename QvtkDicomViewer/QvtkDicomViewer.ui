@@ -1,0 +1,1104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QvtkDicomViewerClass</class>
+ <widget class="QMainWindow" name="QvtkDicomViewerClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1200</width>
+    <height>738</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1200</width>
+    <height>700</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Singmedizin</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="QvtkDicomViewer.qrc">
+    <normaloff>:/QvtkDicomViewer/Resources/Mainlogo.png</normaloff>:/QvtkDicomViewer/Resources/Mainlogo.png</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QVTKWidget" name="qvtkWidget">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="sizeIncrement">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="baseSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="StlWidget" native="true"/>
+      </item>
+      <item>
+       <widget class="QScrollBar" name="SliceScrollBar">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1200</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>文件</string>
+    </property>
+    <addaction name="action_OpenSeriesFolder"/>
+    <addaction name="action_OpenDicomDirFile"/>
+    <addaction name="action_OpenDicomFile"/>
+    <addaction name="separator"/>
+    <addaction name="action_PreviousPatient"/>
+    <addaction name="action_LatterPatient"/>
+   </widget>
+   <widget class="QMenu" name="menu_2">
+    <property name="title">
+     <string>信息</string>
+    </property>
+    <addaction name="action_back"/>
+    <addaction name="action_next"/>
+   </widget>
+   <widget class="QMenu" name="menu_3">
+    <property name="title">
+     <string>工具</string>
+    </property>
+    <addaction name="action_Pointer"/>
+    <addaction name="action_Protractor"/>
+    <addaction name="action_Ruler"/>
+    <addaction name="action_Contour"/>
+    <addaction name="action_BiDimensional"/>
+    <addaction name="action_Reset"/>
+    <addaction name="action_Zoom"/>
+    <addaction name="action_GrayLevel"/>
+    <addaction name="action_Move"/>
+    <addaction name="action_Play"/>
+    <addaction name="action_Stop"/>
+    <addaction name="separator"/>
+    <addaction name="action_Registration"/>
+   </widget>
+   <widget class="QMenu" name="menu_4">
+    <property name="title">
+     <string>窗口</string>
+    </property>
+    <addaction name="action_SwitchOfProperty"/>
+   </widget>
+   <widget class="QMenu" name="menu_5">
+    <property name="title">
+     <string>测试</string>
+    </property>
+    <addaction name="action_TestEntrance_01"/>
+    <addaction name="action_TestEntrance_02"/>
+   </widget>
+   <widget class="QMenu" name="menu_WindowSizeLevel">
+    <property name="title">
+     <string>窗宽窗位</string>
+    </property>
+    <addaction name="action_WindowWL_Default"/>
+    <addaction name="action_WindowWL_All"/>
+    <addaction name="separator"/>
+    <addaction name="action_WindowWL_CT_Abdomen"/>
+    <addaction name="action_WindowWL_CT_BloodVessel"/>
+    <addaction name="action_WindowWL_CT_Bones"/>
+    <addaction name="action_WindowWL_CT_Brain"/>
+    <addaction name="action_WindowWL_CT_Medias"/>
+    <addaction name="action_WindowWL_CT_Lungs"/>
+    <addaction name="separator"/>
+    <addaction name="action_Negative"/>
+   </widget>
+   <addaction name="menu"/>
+   <addaction name="menu_2"/>
+   <addaction name="menu_3"/>
+   <addaction name="menu_WindowSizeLevel"/>
+   <addaction name="menu_4"/>
+   <addaction name="menu_5"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="action_OpenDicomDirFile"/>
+   <addaction name="action_OpenDicomFile"/>
+   <addaction name="action_OpenSeriesFolder"/>
+   <addaction name="separator"/>
+   <addaction name="action_PreviousPatient"/>
+   <addaction name="action_LatterPatient"/>
+   <addaction name="separator"/>
+   <addaction name="action_back"/>
+   <addaction name="action_Play"/>
+   <addaction name="action_next"/>
+   <addaction name="action_Stop"/>
+   <addaction name="separator"/>
+   <addaction name="action_Pointer"/>
+   <addaction name="action_Zoom"/>
+   <addaction name="action_GrayLevel"/>
+   <addaction name="action_Move"/>
+   <addaction name="action_Protractor"/>
+   <addaction name="action_Ruler"/>
+   <addaction name="action_Contour"/>
+   <addaction name="action_BiDimensional"/>
+   <addaction name="separator"/>
+   <addaction name="action_Negative"/>
+   <addaction name="action_Reset"/>
+   <addaction name="separator"/>
+   <addaction name="action_Registration"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QDockWidget" name="dockWidget_Dir">
+   <property name="toolTip">
+    <string/>
+   </property>
+   <property name="windowTitle">
+    <string>DICOMDIR</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QTreeView" name="treeView">
+       <property name="contextMenuPolicy">
+        <enum>Qt::CustomContextMenu</enum>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <action name="action_OpenSeriesFolder">
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/folder_128px_1207828_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/folder_128px_1207828_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>打开Series目录</string>
+   </property>
+  </action>
+  <action name="action_back">
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/front_128px_1143868_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/front_128px_1143868_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>上一张</string>
+   </property>
+  </action>
+  <action name="action_next">
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/next_128px_1143867_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/next_128px_1143867_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>下一张</string>
+   </property>
+  </action>
+  <action name="action_Pointer">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/mouse_128px_1153948_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/mouse_128px_1153948_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>无</string>
+   </property>
+  </action>
+  <action name="action_Protractor">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/Angle_Thingy_128px_559411_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/Angle_Thingy_128px_559411_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>量角器</string>
+   </property>
+  </action>
+  <action name="action_Ruler">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/ruler_128px_1209146_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/ruler_128px_1209146_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>测距尺</string>
+   </property>
+  </action>
+  <action name="action_Contour">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/Bezier_Curve_128px_559452_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/Bezier_Curve_128px_559452_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>轮廓</string>
+   </property>
+   <property name="toolTip">
+    <string>轮廓</string>
+   </property>
+  </action>
+  <action name="action_BiDimensional">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/Arrow_Cross_128px_1177075_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/Arrow_Cross_128px_1177075_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>二维标尺</string>
+   </property>
+  </action>
+  <action name="action_Negative">
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/video_negative_128px_1138773_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/video_negative_128px_1138773_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>负片</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="action_Reset">
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/cancel_128px_1209038_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/cancel_128px_1209038_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>复位</string>
+   </property>
+  </action>
+  <action name="action_Zoom">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/zoom_in_128px_1200197_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/zoom_in_128px_1200197_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>缩放</string>
+   </property>
+  </action>
+  <action name="action_GrayLevel">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/brightness_128px_1193620_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/brightness_128px_1193620_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>灰阶</string>
+   </property>
+   <property name="toolTip">
+    <string>灰阶</string>
+   </property>
+  </action>
+  <action name="action_Move">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/move_Hand_128px_1154031_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/move_Hand_128px_1154031_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>移动</string>
+   </property>
+  </action>
+  <action name="action_SwitchOfProperty">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>属性</string>
+   </property>
+  </action>
+  <action name="action_Play">
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/play_128px_1197036_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/play_128px_1197036_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>播放</string>
+   </property>
+  </action>
+  <action name="action_Stop">
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/stop_128px_1197040_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/stop_128px_1197040_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>停止</string>
+   </property>
+  </action>
+  <action name="action_TestEntrance_01">
+   <property name="text">
+    <string>测试入口1</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="action_TestEntrance_02">
+   <property name="text">
+    <string>测试入口2</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="action_OpenDicomDirFile">
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/file_128px_1197084_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/file_128px_1197084_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>打开Stl文件</string>
+   </property>
+  </action>
+  <action name="action_OpenDicomFile">
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/X_Ray_Hand_128px_1124752_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/X_Ray_Hand_128px_1124752_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>打开Dicom文件</string>
+   </property>
+  </action>
+  <action name="action_PreviousPatient">
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/hand_pointing_left_128px_1143134_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/hand_pointing_left_128px_1143134_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>上一个病人</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="action_LatterPatient">
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/hand_pointing_right_128px_1143133_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/hand_pointing_right_128px_1143133_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>下一个病人</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="action_WindowWL_Default">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>默认</string>
+   </property>
+  </action>
+  <action name="action_WindowWL_All">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>全部动态范围</string>
+   </property>
+  </action>
+  <action name="action_WindowWL_CT_Abdomen">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>CT-腹</string>
+   </property>
+  </action>
+  <action name="action_WindowWL_CT_BloodVessel">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>CT-血管</string>
+   </property>
+  </action>
+  <action name="action_WindowWL_CT_Bones">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>CT-骨骼</string>
+   </property>
+  </action>
+  <action name="action_WindowWL_CT_Brain">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>CT-脑</string>
+   </property>
+  </action>
+  <action name="action_WindowWL_CT_Medias">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>CT-纵膈</string>
+   </property>
+  </action>
+  <action name="action_WindowWL_CT_Lungs">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>CT-肺</string>
+   </property>
+  </action>
+  <action name="action_Registration">
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/aim_128px_1207156_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/aim_128px_1207156_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>配准工具</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>QVTKWidget</class>
+   <extends>QWidget</extends>
+   <header>QVTKWidget.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="QvtkDicomViewer.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>action_back</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnBackward()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>408</x>
+     <y>278</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_next</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnForward()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>408</x>
+     <y>278</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Pointer</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnSelectedPointer()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>408</x>
+     <y>278</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Protractor</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnSelectedProtractor()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>408</x>
+     <y>278</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Ruler</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnSelectedRuler()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>408</x>
+     <y>278</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Contour</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnSelectedContour()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_BiDimensional</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnSelectedBiDimensional()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Negative</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnNegative()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Reset</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnReset()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_GrayLevel</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnSelectedGrayLevel()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Zoom</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnSelectedZoom()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Move</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnSelectedMove()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_SwitchOfProperty</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnSwitchProperty()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Play</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnPlay()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Stop</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnStop()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_TestEntrance_01</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnTestEntrance_01()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_TestEntrance_02</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnTestEntrance_02()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_OpenDicomDirFile</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnOpenDicomDirFile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_OpenSeriesFolder</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnOpenSeriesFolder()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_OpenDicomFile</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnOpenDicomFile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>treeView</sender>
+   <signal>customContextMenuRequested(QPoint)</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>on_treeView_customContextMenuRequested(QPoint)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>138</x>
+     <y>401</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>SliceScrollBar</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnSliceScrollBarValueChange(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1188</x>
+     <y>463</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>282</x>
+     <y>448</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_PreviousPatient</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnPreviousPatient()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>599</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_LatterPatient</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnLatterPatient()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>599</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_WindowWL_All</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnWindowWL_All()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>599</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_WindowWL_CT_Abdomen</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnWindowWL_CT_Abdomen()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>599</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_WindowWL_CT_BloodVessel</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnWindowWL_CT_BloodVessel()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>599</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_WindowWL_CT_Bones</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnWindowWL_CT_Bones()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>599</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_WindowWL_CT_Brain</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnWindowWL_CT_Brain()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>599</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_WindowWL_CT_Medias</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnWindowWL_CT_Medias()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>599</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_WindowWL_CT_Lungs</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnWindowWL_CT_Lungs()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>599</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_WindowWL_Default</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnWindowWL_Defaut()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>599</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Registration</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnRegistration()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>599</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>OnOpenFile()</slot>
+  <slot>OnRenderText()</slot>
+  <slot>OnForward()</slot>
+  <slot>OnBackward()</slot>
+  <slot>OnSelectedPointer()</slot>
+  <slot>OnSelectedProtractor()</slot>
+  <slot>OnSelectedRuler()</slot>
+  <slot>OnTest()</slot>
+  <slot>OnSelectedContour()</slot>
+  <slot>OnSelectedBiDimensional()</slot>
+  <slot>OnNegative()</slot>
+  <slot>OnReset()</slot>
+  <slot>OnSlider()</slot>
+  <slot>OnSelectedGrayLevel()</slot>
+  <slot>OnSelectedMove()</slot>
+  <slot>OnSelectedZoom()</slot>
+  <slot>OnSwitchProperty()</slot>
+  <slot>OnPlay()</slot>
+  <slot>OnStop()</slot>
+  <slot>OnTestReadDICOMDIR()</slot>
+  <slot>OnOpenSeriesFolder()</slot>
+  <slot>OnOpenDicomFile()</slot>
+  <slot>OnOpenDicomDirFile()</slot>
+  <slot>on_treeView_customContextMenuRequested(QPoint)</slot>
+  <slot>OnSliceScrollBarValueChange(int)</slot>
+  <slot>OnTestEntrance_01()</slot>
+  <slot>OnTestEntrance_02()</slot>
+  <slot>OnLatterPatient()</slot>
+  <slot>OnPreviousPatient()</slot>
+  <slot>OnWindowWL_Defaut()</slot>
+  <slot>OnWindowWL_All()</slot>
+  <slot>OnWindowWL_CT_Abdomen()</slot>
+  <slot>OnWindowWL_CT_BloodVessel()</slot>
+  <slot>OnWindowWL_CT_Bones()</slot>
+  <slot>OnWindowWL_CT_Brain()</slot>
+  <slot>OnWindowWL_CT_Medias()</slot>
+  <slot>OnWindowWL_CT_Lungs()</slot>
+  <slot>OnRegistration()</slot>
+ </slots>
+</ui>
