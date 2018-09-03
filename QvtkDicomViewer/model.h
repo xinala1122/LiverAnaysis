@@ -9,6 +9,7 @@
 #include <QtOpenGL>
 #include <GL/glu.h>
 #include<glut.h>
+
 typedef struct modelSize{
     //
     //
@@ -20,6 +21,14 @@ typedef struct modelSize{
     float largeZ;
 } modelSize;
 
+struct PerColorContent
+{
+	QString fileName;
+	float red;
+	float green;
+	float blue;
+};
+
 class STLModel : public QObject
 {
     Q_OBJECT
@@ -27,10 +36,13 @@ public:
     explicit STLModel(QObject *parent = 0);
 private:
     QList<face*> faceList;
+	QMap<QString, QList<face*>> m_multifaceMap;
+
     modelSize size;
     QVector3D center;
+	QMap<QString, PerColorContent> m_colorContenMap;
 public:
-    void model_load(QString path);
+    void model_load(QString path, int numOfTotal, int total);
     void model_readText(QString path);
     void model_readBinary(QString path);
     void model_clear(bool clearAll = false);
@@ -42,6 +54,7 @@ public:
     QVector3D model_getCenter(modelSize size);
 
     int model_getFacesCount();
+	void InitColorParam();
 private:
     QVector3D getCoordinateFromString(QString line);
 signals:

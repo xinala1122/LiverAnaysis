@@ -171,6 +171,18 @@
     <ClCompile Include="GeneratedFiles\Release\moc_openglwidget.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
+    <ClCompile Include="QtVTKRenderWindows.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_QtVTKRenderWindows.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_QtVTKRenderWindows.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IniAccess.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="QvtkDicomViewer.h">
@@ -225,6 +237,12 @@
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="openglwidget.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="QtVTKRenderWindows.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="QtVTKRenderWindows.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>
@@ -284,6 +302,12 @@
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_QtVTKRenderWindows.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IniAccess.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

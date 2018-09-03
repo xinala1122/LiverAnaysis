@@ -17,12 +17,15 @@ class Segmenter : public QWidget
 public:
 	Segmenter(QWidget *parent = Q_NULLPTR);
 	Segmenter(std::string Filename,QWidget *parent = Q_NULLPTR);
-	~Segmenter();
+	virtual ~Segmenter();
+protected:
+	virtual void closeEvent(QCloseEvent *event);
 
 private:
 	Ui::Segmenter ui;
 	std::string m_Filename;			//待分割处理的原图的绝对路径
 	SegmentFunc m_segment_fun;		//用户选择的分割方法
+	vtkSmartPointer<vtkRenderWindowInteractor> renderWindowInteractor;
 signals:
 	void SegmentFuncChange();		//用户重新选择/首次选择分割算法
 public slots:

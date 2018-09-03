@@ -52,7 +52,7 @@ protected:
 signals:
     void SigClearTree();
 public slots:
-    void slot_recieveStl(QString path);
+    void slot_recieveStl(QString path, int numOfTotal, int tatal);
     void slot_finishLoadStl();
 
     void slot_moveLeft();

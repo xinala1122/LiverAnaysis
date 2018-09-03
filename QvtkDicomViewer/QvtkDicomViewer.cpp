@@ -1,7 +1,6 @@
 #include "myVtkInteractorStyleImage.h"
 #include "vtkBiDimensionalCallback.h"
 #include "DicomDir.h"
-#include "Segmenter.h"
 #include <QListView>
 #include "QvtkDicomViewer.h"
 #include <QMessageBox>
@@ -11,6 +10,7 @@
 #include <QTableView>
 #include <QAction>
 #include <QMenu>
+#include <QMovie>
 
 #include <vtkActor2D.h>
 #include <vtkTextMapper.h>
@@ -83,9 +83,9 @@ QvtkDicomViewer::QvtkDicomViewer(QWidget *parent)
 	connect(m_pTimer, SIGNAL(timeout()), this, SLOT(OnPlayerTimerOut()));
 
 	this->m_myWidget = new myWidget(this);
-	connect(this, SIGNAL(SigOpenStlFile()), this->m_myWidget, SLOT(slot_openStl()));
+	connect(this, SIGNAL(SigOpenStlFile(QString)), this->m_myWidget, SLOT(slot_openStl(QString)));
 
-	connect(this->m_myWidget, SIGNAL(signal_loadStl(QString)), this, SLOT(OnProjectLoadFinish(QString)));
+	connect(this->m_myWidget, SIGNAL(signal_loadStl(QString,int, int)), this, SLOT(OnProjectLoadFinish(QString, int, int)));
 	connect(this->m_myWidget, SIGNAL(SigClearTree()), this, SLOT(OnClearTree()));
 
 	QHBoxLayout *hlayout = new QHBoxLayout;//创建一个水平布局管理器
@@ -95,6 +95,17 @@ QvtkDicomViewer::QvtkDicomViewer(QWidget *parent)
 	//
 	this->ui.StlWidget->setLayout(hlayout);//将水平布局器加入主窗口
 	this->ui.StlWidget->setVisible(false);
+	this->m_QtVTKRenderWindows = NULL;
+	_segmenter = NULL;
+}
+
+QvtkDicomViewer::~QvtkDicomViewer()
+{
+	if (_segmenter != NULL)
+	{
+		delete _segmenter;
+		_segmenter = NULL;
+	}
 }
 //播放器定时触发
 void QvtkDicomViewer::OnPlayerTimerOut()
@@ -342,8 +353,19 @@ void QvtkDicomViewer::OnOpenSeriesFolder()
 	QString dir = QFileDialog::getExistingDirectory(this, QStringLiteral("打开Series目录"), "F:/", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
 	if (dir.isEmpty() == true)
 		return;
-	this->ui.qvtkWidget->setVisible(true);
-	this->ui.StlWidget->setVisible(false);
+	this->ui.qvtkWidget->setVisible(false);
+	this->ui.StlWidget->setVisible(true);
+
+	this->m_dicomFilesPath = dir;
+	QMovie *movie = new QMovie(":/QvtkDicomViewer/Resources/wait.gif");
+	movie->setSpeed(1000);
+	movie->setBackgroundColor(QColor(10, 10, 10));
+	QLabel  *Label = new QLabel(QStringLiteral("请等待..."));
+	Label->setFixedSize(100, 30);
+	Label->setMovie(movie);
+	Label->setScaledContents(true);
+	Label->show();
+	movie->start();
 
 	DicomDir *m_dicomdir = new DicomDir();
 	connect(m_dicomdir, SIGNAL(sendData(QString)), this, SLOT(receiveData(QString)));
@@ -351,25 +373,43 @@ void QvtkDicomViewer::OnOpenSeriesFolder()
 
 	//m_dicomdir->show();
 	setAppState(Folder);//程序进入Folder状态
+	this->OnRegistration(false);
+
+	int first = dir.lastIndexOf("/"); //从后面查找"/"位置
+	QString stlFilePath = dir.left(first); //从左边截取
+	emit SigOpenStlFile(stlFilePath);
+
+	movie->stop();
+	Label->close();
+	delete Label;
+	Label = NULL;
+	delete movie;
+	movie = NULL;
+
+	this->OnOpenDicomFile();
+	this->OnOpenDicomDirFile();
 }
 
 //打开单张Dicom文件
 void QvtkDicomViewer::OnOpenDicomFile()
 {
-	//打开文件选择页面
-	QString path = QFileDialog::getOpenFileName(this, QStringLiteral("打开DICOM文件"), ".", QStringLiteral("全部类型(*.*)"));
-	if (path.isEmpty() == true)
-		return;
-	/*
-	 * 验证是不是正常的DICOM图片文件
-	 */
 	this->ui.qvtkWidget->setVisible(true);
 	this->ui.StlWidget->setVisible(false);
 
-	DicomDir *m_dicomdir = new DicomDir();
-	connect(m_dicomdir, SIGNAL(sendData(QString)), this, SLOT(receiveData(QString)));
-	m_dicomdir->InitDirExplorerFromSingleFilePath(path);
-	setAppState(SingleImage);//程序进入SingleImage状态
+	////打开文件选择页面
+	//QString path = QFileDialog::getOpenFileName(this, QStringLiteral("打开DICOM文件"), ".", QStringLiteral("全部类型(*.*)"));
+	//if (path.isEmpty() == true)
+	//	return;
+	///*
+	// * 验证是不是正常的DICOM图片文件
+	// */
+	//this->ui.qvtkWidget->setVisible(true);
+	//this->ui.StlWidget->setVisible(false);
+
+	//DicomDir *m_dicomdir = new DicomDir();
+	//connect(m_dicomdir, SIGNAL(sendData(QString)), this, SLOT(receiveData(QString)));
+	//m_dicomdir->InitDirExplorerFromSingleFilePath(path);
+	//setAppState(SingleImage);//程序进入SingleImage状态
 }
 
 //打开DICOMDIR文件
@@ -377,7 +417,8 @@ void QvtkDicomViewer::OnOpenDicomDirFile()
 {							  
 	this->ui.qvtkWidget->setVisible(false);
 	this->ui.StlWidget->setVisible(true);
-	emit SigOpenStlFile();
+	//emit SigOpenStlFile();
+
 	////打开文件选择页面
 	//QString path = QFileDialog::getOpenFileName(this, QStringLiteral("打开DICOMDIR文件"), ".", QStringLiteral("全部类型(*.*)"));
 	//if (path.isEmpty() == true)
@@ -875,7 +916,7 @@ void QvtkDicomViewer::RenderRefresh(std::string imagefilename,int currentPagenum
 	ui.qvtkWidget->GetRenderWindow()->Render();
 }
 
-void QvtkDicomViewer::OnProjectLoadFinish(QString filePath)
+void QvtkDicomViewer::OnProjectLoadFinish(QString filePath, int numoftotal, int total)
 {
 	QFileInfo  info(filePath);
 
@@ -902,14 +943,25 @@ void QvtkDicomViewer::UpdateTreeForStl()
 	root->setData(MARK_FOLDER, ROLE_MARK_FOLDER);
 
 	model->appendRow(root);
+	ui.treeView->setObjectName("stlTree");
 	ui.treeView->setModel(model);
 
 	QVector<QString>::iterator ProjectItemTypeIt;
 	for (ProjectItemTypeIt = this->m_treeProjectVector.begin(); ProjectItemTypeIt != this->m_treeProjectVector.end(); ++ProjectItemTypeIt)
 	{
 		QString rootName = *ProjectItemTypeIt;
+		QStringList fileNameNoFormList = rootName.split('.');
+		QString fileNameNoForm;
+		if (fileNameNoFormList.length() > 0)
+		{
+			fileNameNoForm = fileNameNoFormList.at(0);
+		}
+		else
+		{
+			fileNameNoForm = rootName;
+		}
 
-		QStandardItem* folder = new QStandardItem(QIcon(":/icon/icon/h-f.png"), rootName);
+		QStandardItem* folder = new QStandardItem(QIcon(":/icon/icon/h-f.png"), fileNameNoForm);
 		folder->setData(MARK_FOLDER, ROLE_MARK);
 		//folder->setData(folderType, ROLE_MARK_FOLDER);
 		root->appendRow(folder);
@@ -925,6 +977,7 @@ void QvtkDicomViewer::DirTreeRefresh(DicomPatient * patient)
 	headers.append(QStringLiteral("ID"));
 	headers.append(QStringLiteral("详细信息"));
 	m_dicomdirtreemodel = new DicomDirTreeModel(headers, *patient);
+	ui.treeView->setObjectName("dicomTree");
 	ui.treeView->setModel(m_dicomdirtreemodel);
 	ui.treeView->expandAll();
 	for (int column = 0; column < m_dicomdirtreemodel->columnCount(); ++column)
@@ -1112,15 +1165,17 @@ void QvtkDicomViewer::OnStop()
 			 //此时树是空的
 			 TreeViewMenu_OnEmpty->exec(QCursor::pos());//显示右键菜单
 		 }
-		 else//树非空的时候才能启动这个
+		 else if (ui.treeView->objectName() == "dicomTree")//树非空的时候才能启动这个
 		 {
 			 indexSelect = ui.treeView->indexAt(pos);  //当前节点索引
 			 switch (m_dicomdirtreemodel->getLevel(indexSelect))
 			 {
 			 case 1://level==1:Patient
-				 TreeViewMenu_OnPatient->exec(QCursor::pos());
+				 TreeViewMenu_OnSeries->exec(QCursor::pos());
+				 //TreeViewMenu_OnPatient->exec(QCursor::pos());
 				 break;
 			 case 2://level==2:Study
+				 TreeViewMenu_OnImage->exec(QCursor::pos());
 				 //目前还没有对应的菜单
 				 break;
 			 case 3://level==3:Series
@@ -1211,7 +1266,7 @@ void QvtkDicomViewer::OnSegmentImage()
 	/*
 	 * 启动分割工具并传递关键参数
 	 */
-	Segmenter *_segmenter = new Segmenter(CurrentPatient->getCurrentDicomImage()->AbsFilePath);
+	_segmenter = new Segmenter(CurrentPatient->getCurrentDicomImage()->AbsFilePath);
 	_segmenter->show();
 }
 
@@ -1328,8 +1383,18 @@ void QvtkDicomViewer::OnSegmentImage()
  }
  
  //启动配准工具
- void QvtkDicomViewer::OnRegistration()
+ void QvtkDicomViewer::OnRegistration(bool popDlg)
  {
+	 if (!this->m_dicomFilesPath.isEmpty())
+	 {
+		 if (this->m_QtVTKRenderWindows == NULL)
+		 {
+			 this->m_QtVTKRenderWindows = new QtVTKRenderWindows(this->m_dicomFilesPath);
+		 }
+
+		 if (popDlg)
+			this->m_QtVTKRenderWindows->showMaximized();
+	 }
 	 //m_Reg_Window = new Register();//事先初始化配准工具
 	 //m_Reg_Window->show();
 	//为了增加响应速度,初始化代码应该统一起来,这是一个尝试,以后会逐渐改成这样

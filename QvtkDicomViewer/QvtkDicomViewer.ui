@@ -123,13 +123,6 @@
     </property>
     <addaction name="action_SwitchOfProperty"/>
    </widget>
-   <widget class="QMenu" name="menu_5">
-    <property name="title">
-     <string>测试</string>
-    </property>
-    <addaction name="action_TestEntrance_01"/>
-    <addaction name="action_TestEntrance_02"/>
-   </widget>
    <widget class="QMenu" name="menu_WindowSizeLevel">
     <property name="title">
      <string>窗宽窗位</string>
@@ -151,7 +144,6 @@
    <addaction name="menu_3"/>
    <addaction name="menu_WindowSizeLevel"/>
    <addaction name="menu_4"/>
-   <addaction name="menu_5"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -160,8 +152,6 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="action_OpenDicomDirFile"/>
-   <addaction name="action_OpenDicomFile"/>
    <addaction name="action_OpenSeriesFolder"/>
    <addaction name="separator"/>
    <addaction name="action_PreviousPatient"/>
@@ -180,11 +170,14 @@
    <addaction name="action_Ruler"/>
    <addaction name="action_Contour"/>
    <addaction name="action_BiDimensional"/>
-   <addaction name="separator"/>
-   <addaction name="action_Negative"/>
    <addaction name="action_Reset"/>
    <addaction name="separator"/>
+   <addaction name="action_Negative"/>
    <addaction name="action_Registration"/>
+   <addaction name="separator"/>
+   <addaction name="action_OpenDicomDirFile"/>
+   <addaction name="action_OpenDicomFile"/>
+   <addaction name="separator"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QDockWidget" name="dockWidget_Dir">
@@ -215,7 +208,7 @@
      <normaloff>:/QvtkDicomViewer/Resources/folder_128px_1207828_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/folder_128px_1207828_easyicon.net.ico</iconset>
    </property>
    <property name="text">
-    <string>打开Series目录</string>
+    <string>选择数据目录</string>
    </property>
   </action>
   <action name="action_back">
@@ -407,7 +400,7 @@
      <normaloff>:/QvtkDicomViewer/Resources/file_128px_1197084_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/file_128px_1197084_easyicon.net.ico</iconset>
    </property>
    <property name="text">
-    <string>打开Stl文件</string>
+    <string>显示3D图</string>
    </property>
   </action>
   <action name="action_OpenDicomFile">
@@ -416,7 +409,7 @@
      <normaloff>:/QvtkDicomViewer/Resources/X_Ray_Hand_128px_1124752_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/X_Ray_Hand_128px_1124752_easyicon.net.ico</iconset>
    </property>
    <property name="text">
-    <string>打开Dicom文件</string>
+    <string>显示CT图</string>
    </property>
   </action>
   <action name="action_PreviousPatient">
@@ -513,10 +506,10 @@
      <normaloff>:/QvtkDicomViewer/Resources/aim_128px_1207156_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/aim_128px_1207156_easyicon.net.ico</iconset>
    </property>
    <property name="text">
-    <string>配准工具</string>
+    <string>三维重建图</string>
    </property>
    <property name="visible">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
   </action>
  </widget>

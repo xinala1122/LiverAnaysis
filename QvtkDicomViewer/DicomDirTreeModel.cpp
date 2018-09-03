@@ -315,6 +315,43 @@ void DicomDirTreeModel::setupModelData(const DicomPatient & patient, DicomTreeIt
 	PatientData << QString::fromStdString(patient.PatientID);
 	PatientData << QString::fromStdString(patient.PatientName);
 	parent->insertChildren(parent->childCount(), 1, rootItem->columnCount());
+	parent->child(parent->childCount() - 1)->setData(0, PatientData[1]);
+	//for (int column = 0; column < PatientData.size(); ++column)
+	//	parent->child(parent->childCount() - 1)->setData(column, PatientData[column]);
+	for (int i = 0; i < patient.StudyList.size(); i++)
+	{
+		QVector<QVariant> StudyData;
+		StudyData << QString::fromStdString(patient.StudyList[i]->StudyId);
+		StudyData << QString::fromStdString(patient.StudyList[i]->ModulationType);
+		//parent->child(0)->insertChildren(parent->child(0)->childCount(), 1, rootItem->columnCount());
+		//for (int column = 0; column < StudyData.size(); ++column)
+			//parent->child(0)->child(parent->childCount() - 1)->setData(column, StudyData[column]);
+		for (int j = 0; j < patient.StudyList[i]->SeriesList.size(); j++)
+		{
+			QVector<QVariant> SeriesData;
+			SeriesData << QString::fromStdString(patient.StudyList[i]->SeriesList[j]->SeriseNumber);
+			SeriesData << QString::fromStdString(patient.StudyList[i]->SeriesList[j]->Manufacturer);
+			//parent->child(0)->child(i)->insertChildren(parent->child(0)->child(i)->childCount(), 1, rootItem->columnCount());
+			//for (int column = 0; column < SeriesData.size(); ++column)
+			//	parent->child(0)->child(i)->child(parent->child(0)->child(i)->childCount() - 1)->setData(column, SeriesData[column]);
+			for (int k = 0; k < patient.StudyList[i]->SeriesList[j]->ImageList.size(); k++)
+			{
+				QVector<QVariant> ImageData;
+				QString temp = "Img"; temp.append(QString::fromStdString(std::to_string(k)));
+				ImageData << temp;
+				ImageData << QString::fromStdString(patient.StudyList[i]->SeriesList[j]->ImageList[k]->ReferencedFileID);
+				parent->child(0)->insertChildren(parent->child(0)->childCount(), 1, rootItem->columnCount());
+				//parent->child(0)->child(i)->child(j)->insertChildren(parent->child(0)->child(i)->child(j)->childCount(), 1, rootItem->columnCount());
+				parent->child(0)->child(parent->child(0)->childCount() - 1)->setData(1, ImageData[1]);
+				//for (int column = 0; column < ImageData.size(); ++column)
+					//parent->child(0)->child(i)->child(j)->child(parent->child(0)->child(i)->child(j)->childCount() - 1)->setData(column, ImageData[column]);
+			}
+		}
+	}
+	/*QVector<QVariant> PatientData;
+	PatientData << QString::fromStdString(patient.PatientID);
+	PatientData << QString::fromStdString(patient.PatientName);
+	parent->insertChildren(parent->childCount(), 1, rootItem->columnCount());
 	for (int column = 0; column < PatientData.size(); ++column)
 		parent->child(parent->childCount() - 1)->setData(column, PatientData[column]);
 	for (int i = 0; i < patient.StudyList.size(); i++)
@@ -344,5 +381,5 @@ void DicomDirTreeModel::setupModelData(const DicomPatient & patient, DicomTreeIt
 					parent->child(0)->child(i)->child(j)->child(parent->child(0)->child(i)->child(j)->childCount() - 1)->setData(column, ImageData[column]);
 			}
 		}
-	}
+	}*/
 }

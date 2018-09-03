@@ -26,6 +26,14 @@ Segmenter::Segmenter(std::string Filename, QWidget* parent) : QWidget(parent)
 Segmenter::~Segmenter()
 {
 }
+
+void Segmenter::closeEvent(QCloseEvent *event)
+{
+	//renderWindowInteractor->EndPanEvent();
+	//renderWindowInteractor->ExitEvent();
+	//renderWindowInteractor->EndPickCallback();
+	renderWindowInteractor->ExitCallback();
+}
 /*
  *联通阈值方法
  */
@@ -102,7 +110,7 @@ void Segmenter::OnSegmentFuncChange()
 	propPicker->AddPickList(imageViewer->GetImageActor());// Give the picker a prop to pick
 
 	// 显示
-	vtkSmartPointer<vtkRenderWindowInteractor> renderWindowInteractor = vtkSmartPointer<vtkRenderWindowInteractor>::New();
+	renderWindowInteractor = vtkSmartPointer<vtkRenderWindowInteractor>::New();
 	imageViewer->SetInputConnection(reader->GetOutputPort());
 	imageViewer->SetupInteractor(renderWindowInteractor);
 	imageViewer->SetSize(600, 600);

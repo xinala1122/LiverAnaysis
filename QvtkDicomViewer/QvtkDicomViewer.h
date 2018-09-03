@@ -87,6 +87,8 @@
 #include <QOpenGLBuffer>
 #include "face.h"
 #include "mywidget.h"
+#include "QtVTKRenderWindows.h"
+#include "Segmenter.h"
 
 class DicomDataBase;
 /*
@@ -124,6 +126,7 @@ class QvtkDicomViewer : public QMainWindow
 
 public:
 	QvtkDicomViewer(QWidget *parent = Q_NULLPTR);
+	virtual ~QvtkDicomViewer();
 	//QComboBox* reg_combo;
 	Register * m_Reg_Window;
 	enum CURSOR		
@@ -202,7 +205,9 @@ private:
 
 	myWidget                        *m_myWidget;
 	QVector<QString>				m_treeProjectVector;
-
+	QtVTKRenderWindows				*m_QtVTKRenderWindows;
+	Segmenter						*_segmenter;
+	QString							m_dicomFilesPath;
 private:
 	///内部操作
 	void setCursor(CURSOR newValue);		//改变鼠标指针交互模式
@@ -224,7 +229,7 @@ signals :
 	void CursorValueChanged();      //自定义值更改信号,用于监控当前光标的变化
 	void WindowWLChanged();			//自定义值更改信号,用于监控当前窗宽窗位模式的变化
 	void AppStateChanged();			//程序状态更改信号,用于动态变更程序的状态
-	void SigOpenStlFile();
+	void SigOpenStlFile(QString stlFilePath);
 
 public slots:
 	void OnPlayerTimerOut();		//播放器到点了需要更新
@@ -273,9 +278,9 @@ public slots:
 
 	void On3D_Reconstruction();			//响应3维重建
 	void OnSegmentImage();				//响应图像分割
-	void OnRegistration();				//启动配准工具
+	void OnRegistration(bool popDlg = true);				//启动配准工具
 
-	void OnProjectLoadFinish(QString filePath);
+	void OnProjectLoadFinish(QString filePath, int numofTotal = 0, int total = 1);
 	void OnClearTree();
 	void UpdateTreeForStl();
 };

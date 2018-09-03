@@ -15,10 +15,10 @@ public:
     explicit myWidget(QvtkDicomViewer *mainWindow, QWidget *parent = 0);
 
 signals:
-    void signal_loadStl(QString path);
+    void signal_loadStl(QString path, int numOfTotal, int total);
     void SigClearTree();
 public slots:
-    void slot_openStl();
+    void slot_openStl(QString stlFilePath);
 public:
     void openOutside(QString path);
 

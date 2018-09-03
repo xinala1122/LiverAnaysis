@@ -21,6 +21,14 @@ int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
 	CommonHelper::setStyle(QStringLiteral(":/QvtkDicomViewer/Resources/theme_black.qss"));
+	//QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
+	QTextCodec::setCodecForLocale(QTextCodec::codecForName("GBK"));
+	//#ifdef Q_OS_WIN
+//	QTextCodec::setCodecForLocale(QTextCodec::codecForName("gbk"));
+//#else
+//	QTextCodec::setCodecForLocale(QTextCodec::codecForName("utf8"));
+//#endif
+//	QTextCodec::setCodecForLocale(QTextCodec::codecForName("utf8"));
 	//Startup starter;
 	QvtkDicomViewer w;
 	//starter.show();

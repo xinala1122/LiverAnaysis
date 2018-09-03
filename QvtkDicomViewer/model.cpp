@@ -1,16 +1,106 @@
-#include "model.h"
+﻿#include "model.h"
 #include <QTextStream>
 #include <QDebug>
 #include <QDateTime>
-
+#include "IniAccess.h"
 
 STLModel::STLModel(QObject *parent) :
     QObject(parent)
 {   
     model_clear();
+	InitColorParam();
 }
 
-void STLModel::model_load(QString path)
+void STLModel::InitColorParam()
+{
+	QSettings setting("config.ini", QSettings::IniFormat);
+	QString curPath = QCoreApplication::applicationDirPath();
+
+	QString iniFilePath = curPath + "/setup.ini";
+
+	QFile file(iniFilePath);
+	if (file.exists())
+	{
+		IniAccess iniAccess(iniFilePath);
+
+		QMap<QString, QString> colorMap;
+		QString key;
+		QString value;
+		value = QString::fromLocal8Bit("下腔静脉");
+		key = QString::fromLocal8Bit("肝静脉血管");
+
+		QString value1 = QString::fromLatin1("下腔静脉");
+		//std::string value2 = value.toStdString();
+		//value = QString::fromStdString(value2);
+		QString keyItem = "STLFile";
+		QString valueItem = iniAccess.Read("Path", keyItem);
+		QString keyItem2 = "DicomFile";
+		QString valueItem2 = iniAccess.Read("Path", keyItem2);
+		QString xiaqiangjingmai = iniAccess.Read("Param", value);
+
+		QString keyItemS = u8"下腔静脉";
+		QString valueItemS = iniAccess.Read("Param", keyItemS);
+
+		QString keyItemSTL = "xiaqiangjingmai";
+		QString valueItemSTL = iniAccess.Read("Param", keyItemSTL);
+		std::string strValueItemSTL = valueItemSTL.toStdString();
+		//value = QString::fromLocal8Bit("肝静脉血管");
+		//QString ganjingmaixueguan = iniAccess.Read("Param", value);
+
+		//key = QString::fromLocal8Bit("肝静脉血管");
+		//value = QString::fromLocal8Bit("肝静脉血管");
+		//colorMap.insert(key, iniAccess.Read("Param", value));
+		colorMap.insert("xiaqiangjingmai", iniAccess.Read("Param", "xiaqiangjingmai"));
+		colorMap.insert("ganjingmaixueguan", iniAccess.Read("Param", "ganjingmaixueguan"));
+		colorMap.insert("ganzang", iniAccess.Read("Param", "ganzang"));
+		colorMap.insert("youbangan", iniAccess.Read("Param", "youbangan"));
+		colorMap.insert("zuobangan", iniAccess.Read("Param", "zuobangan"));
+		colorMap.insert("yishinangzhong", iniAccess.Read("Param", "yishinangzhong"));
+		colorMap.insert("menjingmaixueguan", iniAccess.Read("Param", "menjingmaixueguan"));
+		colorMap.insert("zhanwei2", iniAccess.Read("Param", "zhanwei2"));
+		colorMap.insert("weizhimidu", iniAccess.Read("Param", "weizhimidu"));
+		colorMap.insert("dongmaixueguan", iniAccess.Read("Param", "dongmaixueguan"));
+		colorMap.insert("dannang", iniAccess.Read("Param", "dannang"));
+		colorMap.insert("danzongguan", iniAccess.Read("Param", "danzongguan"));
+		colorMap.insert("linbajie", iniAccess.Read("Param", "linbajie"));
+		colorMap.insert("pizang", iniAccess.Read("Param", "pizang"));
+		colorMap.insert("yizang", iniAccess.Read("Param", "yizang"));
+		colorMap.insert("yiguan", iniAccess.Read("Param", "yiguan"));
+		colorMap.insert("dannangweizhi", iniAccess.Read("Param", "dannangweizhi"));
+		colorMap.insert("zhanwei1", iniAccess.Read("Param", "zhanwei1"));
+		colorMap.insert("xueguanliu", iniAccess.Read("Param", "xueguanliu"));
+		colorMap.insert("yishizhanwei", iniAccess.Read("Param", "yishizhanwei"));
+
+		QStringList colorContentList;
+		int sum;
+		PerColorContent perColorContent;
+		QList<QString> organNameList = colorMap.keys();
+		for (int i = 0; i < organNameList.count();++i)
+		{
+			if (colorMap.value(organNameList.at(i)).length() > 3)
+			{
+				colorContentList = colorMap.value(organNameList.at(i)).split('.');
+				if (colorContentList.length() == 4)
+				{
+					//m_colorContenList
+					sum = colorContentList.at(1).toUInt() + colorContentList.at(2).toUInt() + colorContentList.at(3).toUInt();
+					perColorContent.fileName = colorContentList.at(0);
+					perColorContent.red = colorContentList.at(1).toUInt() / (float)sum;
+					perColorContent.green = colorContentList.at(2).toUInt() / (float)sum;
+					perColorContent.blue = colorContentList.at(3).toUInt() / (float)sum;
+					this->m_colorContenMap.insert(organNameList.at(i), perColorContent);
+				}
+			}
+		}
+
+	}
+	else
+	{
+		qDebug() << "Error: cannot find envconfig.ini file!";
+	}
+}
+
+void STLModel::model_load(QString path, int numOfTotal, int total)
 {
     //
     QFile file(path);
@@ -29,6 +119,11 @@ void STLModel::model_load(QString path)
             qDebug("model : read Binary");
             model_readBinary(path);
         }
+
+		if (numOfTotal == (total -1))
+		{
+			emit signal_finishLoad();
+		}
     }
 //    else
 //    {
@@ -100,7 +195,7 @@ void STLModel::model_readText(QString path)
     time = QDateTime::currentDateTime();//获取系统现在的时间
 //    qDebug()<< time.toString("yyyy-MM-dd hh:mm:ss ddd"); //设置显示格式
     file.close();
-    emit signal_finishLoad();
+    //emit signal_finishLoad();
 }
 
 
@@ -197,7 +292,22 @@ void STLModel::model_readBinary(QString path)
     file.close();
     qDebug()<<tr("finish load");
     qDebug()<<faceList.size();
-    emit signal_finishLoad();
+	QString file_full = path, file_name, file_path;
+	QFileInfo fi;
+
+	fi = QFileInfo(file_full);
+	file_name = fi.fileName();
+	file_path = fi.absolutePath();
+	QStringList fileNameNoFormList = file_name.split('.');
+	QString fileNameNoForm;
+	if (fileNameNoFormList.length() == 2)
+	{
+		fileNameNoForm = fileNameNoFormList.at(0);
+	}
+
+	m_multifaceMap.insert(fileNameNoForm, faceList);
+	faceList.clear();
+    //emit signal_finishLoad();
 }
 
 void STLModel::model_clear(bool clearAll)
@@ -205,6 +315,7 @@ void STLModel::model_clear(bool clearAll)
     if (clearAll)
     {
         faceList.clear();
+		m_multifaceMap.clear();
     }
 
     size.smallX = 0;
@@ -220,7 +331,49 @@ void STLModel::model_draw()
     QVector<QVector3D> triAngle;
     QVector3D normal;
     GLfloat normalVector[3];
-    for(int i=0; i<faceList.size(); i++)
+
+	QList<QString> organNameList = m_multifaceMap.keys();
+	for (int k = 0; k < organNameList.count();++k)
+	{
+		QList<QString> organColorList = m_colorContenMap.keys();
+		for (int j = 0; j < organColorList.count();++j)
+		{
+			if (m_colorContenMap.value(organColorList.at(j)).fileName == organNameList.at(k))
+			{
+				float red = m_colorContenMap.value(organColorList.at(j)).red;
+				float green = m_colorContenMap.value(organColorList.at(j)).green;
+				float blue = m_colorContenMap.value(organColorList.at(j)).blue;
+				QList<face*> faceListTemp = m_multifaceMap.value(organNameList.at(k));
+
+				for(int i=0; i<faceListTemp.size(); i++)
+				{
+				normal = faceListTemp.at(i)->getNormalVector();
+				normal.normalize();
+				normalVector[0] = normal.x();
+				normalVector[1] = normal.y();
+				normalVector[2] = normal.z();
+				triAngle = faceListTemp.at(i)->getTriAngle();
+				glBegin(GL_TRIANGLES);
+				glColor3f(red, green, blue);
+				glNormal3fv(normalVector);
+				glColor3f(red, green, blue);
+				glVertex3f(triAngle.at(0).x(),triAngle.at(0).y(),triAngle.at(0).z() );
+				glColor3f(red, green, blue);
+				glVertex3f(triAngle.at(1).x(),triAngle.at(1).y(),triAngle.at(1).z() );
+				glColor3f(red, green, blue);
+				glVertex3f(triAngle.at(2).x(),triAngle.at(2).y(),triAngle.at(2).z() );
+				glColor3f(red, green, blue);
+				glEnd();
+				}
+
+				break;
+			}
+		}
+
+		
+	}
+
+    /*for(int i=0; i<faceList.size(); i++)
     {
         normal = faceList.at(i)->getNormalVector();
         normal.normalize();
@@ -231,7 +384,7 @@ void STLModel::model_draw()
       glBegin(GL_TRIANGLES);
         glColor3f(1.0f, 0.0f, 0.0f);
         glNormal3fv(normalVector);
-        glColor3f(1.0f, 1.0f, 0.0f);
+        glColor3f(1.0f, 0.0f, 0.0f);
         glVertex3f(triAngle.at(0).x(),triAngle.at(0).y(),triAngle.at(0).z() );
         glColor3f(1.0f, 0.0f, 0.0f);
         glVertex3f(triAngle.at(1).x(),triAngle.at(1).y(),triAngle.at(1).z() );
@@ -239,7 +392,7 @@ void STLModel::model_draw()
         glVertex3f(triAngle.at(2).x(),triAngle.at(2).y(),triAngle.at(2).z() );
         glColor3f(1.0f, 0.0f, 0.0f);
       glEnd();
-    }
+    }*/
 
 //        glBegin(GL_TRIANGLES);								// Drawing Using Triangles
 //            glVertex3f( 0.0f, 1.0f, 0.0f);					// Top

@@ -68,6 +68,8 @@ void openglWidget::initializeGL()
     glDisable( GL_CULL_FACE);       //
 
     glEnable(GL_LIGHTING);
+	glEnable(GL_COLOR_MATERIAL);
+	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 
     glEnable(GL_LIGHT0);
     glLightfv(GL_LIGHT0,GL_AMBIENT,whiteLighting.ambient);
@@ -87,10 +89,10 @@ void openglWidget::initializeGL()
 
 }
 
-void openglWidget::slot_recieveStl(QString path)
+void openglWidget::slot_recieveStl(QString path, int numOfTotal, int total)
 {
     model->model_clear();
-    model->model_load(path);
+    model->model_load(path, numOfTotal, total);
 }
 
 void openglWidget::slot_finishLoadStl()
